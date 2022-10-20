@@ -1,0 +1,59 @@
+
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.org.User;
+
+/**
+ * Servlet implementation class AdminLoginCheck
+ */
+@WebServlet("/AdminLoginCheck")
+public class AdminLoginCheck extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AdminLoginCheck() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			String adminName = request.getParameter("adminName");
+			String password = request.getParameter("password");
+
+			if (adminName.equals("admin") && password.equals("admin")) {
+				request.setAttribute("username", adminName);
+				RequestDispatcher rd = request.getRequestDispatcher("adminMainPage.jsp");
+				rd.forward(request, response);
+			} else {
+				response.sendRedirect("error.jsp");
+			}
+		}
+		catch(Exception e) {
+			response.sendRedirect("adminLogin.jsp");
+		}
+		
+	}
+
+}
